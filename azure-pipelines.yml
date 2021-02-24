@@ -4,40 +4,35 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- master
+- main
 
 strategy:
   matrix:
-    linux:
+    jdk10_linux:
       imageName: "ubuntu-16.04"
-    mac:
-      imageName: "macos-10.14"
-    windows:
+      jdk_version: "1.10"
+    jdk11_windows:
       imageName: "vs2017-win2016"
+      jdk_version: "1.11"
+    jdk10_mac:
+      imageName: "macos-10.14"
+      jdk_version: "1.10"
   maxParallel: 3
 
 pool:
   vmImage: $(imageName)
 
-strategy:
-  matrix:
-    jdk10:
-      jdk_version: "1.10"
-    jdk11:
-      jdk_version: "1.11"
-  maxParallel: 2
-
 steps:
 - task: Maven@3
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
+    mavenPomFile: "pom.xml"
+    mavenOptions: "-Xmx3072m"
+    javaHomeOption: "JDKVersion"
     jdkVersionOption: $(jdk_version)
-    jdkArchitectureOption: 'x64'
+    jdkArchitectureOption: "x64"
     publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    testResultsFiles: "**/TEST-*.xml"
+    goals: "package"
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: "JaCoCo"
