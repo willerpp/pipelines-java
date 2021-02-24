@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/spinnakercoders/java_project_example/_apis/build/status/willerpp.pipelines-java?branchName=master)](https://dev.azure.com/spinnakercoders/java_project_example/_build/latest?definitionId=1&branchName=master)
 
 # Contributing
 
